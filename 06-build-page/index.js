@@ -11,21 +11,10 @@ async function initDir(path) {
   });
 }
 
-async function copyDir(pathCopySourse, pathCopyDest) {
-  await initDir(pathCopyDest);
-  // fs.readdir(pathCopyDest, (err, data) => {
-  //   if (err) throw err;
-  //   data.forEach((elem) => 
-  //     fs.unlink(path.join(dest, elem), (err) => {
-  //       if (err) return console.error(err.message);
-  //     })
-  //   );
-  // }); 
-}
-
 async function copyAssetsFiles(pathCopySourse, pathCopyDest) {
-  let contant = await fs.promises.readdir(pathCopySourse);
-  contant.forEach((elem) => fs.promises.stat(path.join(pathCopySourse, elem)).then((stats) => {
+  await initDir(pathCopyDest);
+  let content = await fs.promises.readdir(pathCopySourse);
+  content.forEach((elem) => fs.promises.stat(path.join(pathCopySourse, elem)).then((stats) => {
     if (stats.isDirectory()) {
       (async() => {
         initDir(path.join(pathCopyDest, elem));
@@ -96,8 +85,8 @@ async function copyStylesFiles() {
 
 (async() => {
   await initDir(pathNewDir);
-  await copyAssetsFiles(pathAssetsDir, path.join(pathNewDir, 'assets'));
   await copyFile('template.html', 'index.html');
   await createHTMLFile();
   await copyStylesFiles();
+  await copyAssetsFiles(pathAssetsDir, path.join(pathNewDir, 'assets'));
 })();
