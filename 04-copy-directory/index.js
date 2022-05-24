@@ -8,7 +8,7 @@ async function initDir(nameDest) {
   });
 }
 
-async function createCopyOfDir(nameDest) {
+async function prepareDirForCopy(nameDest) {
   const dest = path.join(__dirname, nameDest);
   fs.readdir(dest, (err, data) => {
     if (err) throw err;
@@ -35,6 +35,6 @@ async function copyFiles(nameSourse, nameDest) {
 
 (async() => {
   await initDir('files-copy');
-  await createCopyOfDir('files-copy');
+  await prepareDirForCopy('files-copy');
   await copyFiles('files', 'files-copy');
 })();
