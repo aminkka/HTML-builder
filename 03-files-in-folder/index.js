@@ -7,7 +7,7 @@ fs.readdir(path.join(__dirname, 'secret-folder'), { withFileTypes: true }, (err,
   files.forEach((file) => { 
     fs.stat(path.join(__dirname, 'secret-folder', `${file.name}`), (err, stats) => { 
       let fileSize = stats.size;
-      console.log(`${file.name.slice(0, file.name.indexOf('.'))} - ${path.extname(file.name).slice(1)} - ${fileSize}b`);
+      console.log(`${file.name.slice(0, file.name.lastIndexOf('.'))} - ${path.extname(file.name).slice(1)} - ${fileSize}b`);
     });
   });
 });
